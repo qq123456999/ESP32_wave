@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script language="javascript" type="text/javascript">
+	var err_hz=0,err_pow=0;
+	function textbox1(obj){
+		if (obj.value ==''){obj.value=7.83;}
+		if(parseFloat(obj.value)==obj.value && parseInt(obj.value)>=0 && parseInt(obj.value)<=20){
+			document.getElementById("hzfw").color="black";
+			err_hz=0;
+		}
+		else{
+			document.getElementById("hzfw").color="red";
+			err_hz=1;
+		}
+	}
+	function textbox2(obj){
+		if (obj.value ==''){obj.value=100;}
+		if(parseFloat(obj.value)==obj.value && parseInt(obj.value)>=0 && parseInt(obj.value)<=100){
+			document.getElementById("pfw").color="black";
+			err_pow=0;
+		}
+		else{
+			document.getElementById("pfw").color="red";
+			err_pow=1;
+		}
+	}
+	function toVaild(){
+		if(err_hz==0&&err_pow==0){return true;}
+		else{alert("输入有误，请检查确认无误后重新提交");return false;}
+	}
+	</script>
+	
+	<style type="text/css">
+	body {
+		zoom: 200%;
+		
+		background-color:#cbe0ee;
+	}
+	
+	</style>
+	<meta charset="UTF-8"></meta><title>esp32</title></head>
+	<body>
+		<h2 align="center">慢波睡眠仪设置页面</h2>
+		<h3 align="center">Pearlcare</h3>
+		<form method="post"action="http://192.168.50.119:8087" onsubmit="return toVaild()" autocomplete="off" > <!-- target="frameName" -->
+			<table align="center">
+			<tr><td>波形:</td>
+				<td>
+				<select name="wave">
+				  <option value ="sine">正弦波</option>
+				  <option value ="square">方波</option>
+				  <option value="triangular">三角波</option>
+				  <option value="sawtooth">锯齿波</option>
+				</select>
+				</td>
+			</tr>
+			<tr><td>频率:</td>
+				<td><input style="border: 1px solid #000;" type="text" name="frequence" 
+				onKeyUp="value=value.replace(/[^\d.]/g,'')" 
+				onblur="JavaScript:textbox1(this)"
+				value="7.83" onfocus="if(value =='7.83'){value =''}" 
+				></td>
+				<td>Hz</td>
+				<td><font id="hzfw" color="black">（输入范围0-20Hz）</font ></td>
+			</tr>
+			
+			 <tr><td>功率放大倍数:</td>
+				<td><input style="border: 1px solid #000;" type="text"  name="power" 
+				onKeyUp="value=value.replace(/[^\d.]/g,'')" 
+				onblur="JavaScript:textbox2(this)"
+				value="100" onfocus="if(value =='100'){value =''}"></td>
+				<td>%</td>
+				<td><font id="pfw" color="black">（输入范围0-100%）</font ></td>
+			</tr>
+			
+			<tr><td>led灯:</td>
+				<td><input  type="checkbox" onchange="getElementById('hid').value = (getElementById('hid').value==0)?1:0 " checked></td>
+				<input type="hidden" name="led" value="1" id="hid" />
+				
+			</tr>
+			<tr ><td style="visibility:hidden">提示</td></tr>
+			
+			<tr><td align="center"  colspan="4" style="vertical-align: middle">
+				<input type="submit" value="确认" style="height:30px; ">
+			</td></tr>
+			
+			
+		   </table>
+	</form>
+	<!--
+	<iframe src="" frameborder="0" name="frameName"></iframe>
+	-->
+</body>
+</html>
